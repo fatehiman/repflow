@@ -1,0 +1,20 @@
+{
+  "name": "Light Workout",
+  "short_name": "Workout",
+  "description": "A simple, offline workout runner — no equipment needed.",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a1a2b",
+  "theme_color": "#0f2238",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

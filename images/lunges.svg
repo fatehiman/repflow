@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Forward Lunges">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e3a5f"/><stop offset="1" stop-color="#0f2238"/></linearGradient></defs>
+  <rect width="240" height="240" rx="18" fill="url(#bg)"/>
+  <g fill="none" stroke="#c4b5fd" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <animateTransform attributeName="transform" type="translate" values="0 0; 0 18; 0 0" dur="1.7s" repeatCount="indefinite"/>
+    <circle cx="120" cy="58" r="16" fill="#c4b5fd" stroke="none"/>
+    <line x1="120" y1="74" x2="120" y2="126"/>
+    <line x1="120" y1="92" x2="150" y2="110"/><line x1="120" y1="92" x2="92" y2="108"/>
+    <polyline points="120,126 84,150 84,196"/><polyline points="120,126 162,158 196,158"/>
+  </g>
+  <text x="120" y="226" text-anchor="middle" fill="#9fc6e8" font-family="system-ui,sans-serif" font-size="14">Forward Lunges</text>
+</svg>

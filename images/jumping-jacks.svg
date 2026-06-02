@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Jumping Jacks">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e3a5f"/><stop offset="1" stop-color="#0f2238"/>
+    </linearGradient>
+  </defs>
+  <rect width="240" height="240" rx="18" fill="url(#bg)"/>
+  <g fill="none" stroke="#7fd1ff" stroke-width="7" stroke-linecap="round">
+    <circle cx="120" cy="62" r="16" fill="#7fd1ff" stroke="none"/>
+    <line x1="120" y1="78" x2="120" y2="148"/>
+    <g>
+      <line x1="120" y1="92" x2="80" y2="64"><animate attributeName="x2" values="80;150;80" dur="1s" repeatCount="indefinite"/><animate attributeName="y2" values="64;58;64" dur="1s" repeatCount="indefinite"/></line>
+      <line x1="120" y1="92" x2="160" y2="64"><animate attributeName="x2" values="160;90;160" dur="1s" repeatCount="indefinite"/><animate attributeName="y2" values="64;58;64" dur="1s" repeatCount="indefinite"/></line>
+      <line x1="120" y1="148" x2="92" y2="196"><animate attributeName="x2" values="92;108;92" dur="1s" repeatCount="indefinite"/></line>
+      <line x1="120" y1="148" x2="148" y2="196"><animate attributeName="x2" values="148;132;148" dur="1s" repeatCount="indefinite"/></line>
+    </g>
+  </g>
+  <text x="120" y="226" text-anchor="middle" fill="#9fc6e8" font-family="system-ui,sans-serif" font-size="14">Jumping Jacks</text>
+</svg>

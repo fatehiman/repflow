@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Bird Dog">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e3a5f"/><stop offset="1" stop-color="#0f2238"/></linearGradient></defs>
+  <rect width="240" height="240" rx="18" fill="url(#bg)"/>
+  <g fill="none" stroke="#c4b5fd" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="60" cy="110" r="14" fill="#c4b5fd" stroke="none"/>
+    <line x1="74" y1="114" x2="150" y2="132"/>
+    <line x1="150" y1="132" x2="150" y2="180"/><line x1="110" y1="124" x2="110" y2="180"/>
+    <line x1="74" y1="114" x2="40" y2="92"><animate attributeName="x2" values="40;52;40" dur="1.4s" repeatCount="indefinite"/></line>
+    <line x1="150" y1="132" x2="196" y2="108"><animate attributeName="x2" values="196;184;196" dur="1.4s" repeatCount="indefinite"/></line>
+  </g>
+  <text x="120" y="226" text-anchor="middle" fill="#9fc6e8" font-family="system-ui,sans-serif" font-size="14">Bird Dog</text>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Bodyweight Squats">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e3a5f"/><stop offset="1" stop-color="#0f2238"/></linearGradient></defs>
+  <rect width="240" height="240" rx="18" fill="url(#bg)"/>
+  <g fill="none" stroke="#ffd28a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <animateTransform attributeName="transform" type="translate" values="0 0; 0 26; 0 0" dur="1.6s" repeatCount="indefinite"/>
+    <circle cx="120" cy="60" r="16" fill="#ffd28a" stroke="none"/>
+    <line x1="120" y1="76" x2="120" y2="128"/>
+    <line x1="120" y1="92" x2="86" y2="112"/><line x1="120" y1="92" x2="154" y2="112"/>
+    <polyline points="120,128 96,150 100,196"/><polyline points="120,128 144,150 140,196"/>
+  </g>
+  <text x="120" y="226" text-anchor="middle" fill="#9fc6e8" font-family="system-ui,sans-serif" font-size="14">Bodyweight Squats</text>
+</svg>

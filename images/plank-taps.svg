@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Plank Taps">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e3a5f"/><stop offset="1" stop-color="#0f2238"/></linearGradient></defs>
+  <rect width="240" height="240" rx="18" fill="url(#bg)"/>
+  <g fill="none" stroke="#ffd28a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="58" cy="116" r="14" fill="#ffd28a" stroke="none"/>
+    <line x1="72" y1="120" x2="178" y2="150"/>
+    <line x1="178" y1="150" x2="196" y2="186"/>
+    <line x1="120" y1="135" x2="120" y2="186"/>
+    <line x1="86" y1="124" x2="86" y2="170"><animate attributeName="x2" values="86;120;86" dur="0.9s" repeatCount="indefinite"/><animate attributeName="y2" values="170;150;170" dur="0.9s" repeatCount="indefinite"/></line>
+  </g>
+  <text x="120" y="226" text-anchor="middle" fill="#9fc6e8" font-family="system-ui,sans-serif" font-size="14">Plank Taps</text>
+</svg>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Calf Raises">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e3a5f"/><stop offset="1" stop-color="#0f2238"/></linearGradient></defs>
+  <rect width="240" height="240" rx="18" fill="url(#bg)"/>
+  <g fill="none" stroke="#ff9fb2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <animateTransform attributeName="transform" type="translate" values="0 0; 0 -16; 0 0" dur="1.2s" repeatCount="indefinite"/>
+    <circle cx="120" cy="58" r="16" fill="#ff9fb2" stroke="none"/>
+    <line x1="120" y1="74" x2="120" y2="134"/>
+    <line x1="120" y1="92" x2="96" y2="120"/><line x1="120" y1="92" x2="144" y2="120"/>
+    <line x1="120" y1="134" x2="104" y2="190"/><line x1="120" y1="134" x2="136" y2="190"/>
+  </g>
+  <text x="120" y="226" text-anchor="middle" fill="#9fc6e8" font-family="system-ui,sans-serif" font-size="14">Calf Raises</text>
+</svg>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f2238" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icons/icon.svg" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Workout</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body class="workout">
+  <div class="screen">
+
+    <!-- TOP BAR (~10%) -->
+    <header class="topbar">
+      <div class="timer timer-left">
+        <span class="timer-label">Exercise</span>
+        <span class="timer-value"><span id="exElapsed">00:00</span>/<span id="exTotal">00:00</span></span>
+      </div>
+      <div class="topcenter">
+        <button id="quitBtn" class="quit-btn" type="button" aria-label="Back to home">&times;</button>
+        <span class="ex-progress"><span id="exIdxNow">1</span>/<span id="exIdxTot">1</span></span>
+      </div>
+      <div class="timer timer-right">
+        <span class="timer-label">Total</span>
+        <span class="timer-value"><span id="totElapsed">00:00</span>/<span id="totTotal">00:00</span></span>
+      </div>
+    </header>
+
+    <!-- STAGE (~60%) -->
+    <section class="stage">
+      <img id="exImage" class="ex-image" alt="" />
+
+      <svg class="rings" viewBox="0 0 100 100" aria-hidden="true">
+        <!-- track circles -->
+        <circle class="ring-track" cx="50" cy="50" r="46" />
+        <circle class="ring-track" cx="50" cy="50" r="40" />
+        <!-- progress circles (rotated so they start at 12 o'clock) -->
+        <circle id="ringSet" class="ring-progress ring-set" cx="50" cy="50" r="46" transform="rotate(-90 50 50)" />
+        <circle id="ringRep" class="ring-progress ring-rep" cx="50" cy="50" r="40" transform="rotate(-90 50 50)" />
+      </svg>
+
+      <button id="pauseBtn" class="pause-btn" type="button" aria-label="Pause">
+        <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+        <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg>
+      </button>
+
+      <button id="infoBtn" class="ex-name" type="button" aria-label="Exercise info">
+        <span id="exName"></span>
+        <span class="info-i" aria-hidden="true">i</span>
+      </button>
+    </section>
+
+    <!-- CONTROL PANEL (~30%) -->
+    <section class="panel">
+      <div id="phaseRep" class="counters">
+        <div class="counter">
+          <span class="counter-num"><span id="repNow">0</span><span class="counter-den">/<span id="repTot">0</span></span></span>
+          <span class="counter-label">REP</span>
+        </div>
+        <div class="counter">
+          <span class="counter-num"><span id="setNow">0</span><span class="counter-den">/<span id="setTot">0</span></span></span>
+          <span class="counter-label">SET</span>
+        </div>
+      </div>
+
+      <div id="phaseRest" class="rest-box" hidden>
+        <span class="rest-label">REST</span>
+        <span id="restValue" class="rest-value">00:00</span>
+        <span class="rest-next">Next: set <span id="restNextSet">2</span></span>
+      </div>
+
+      <div id="phasePrepare" class="prep-box" hidden>
+        <span class="prep-label">PREPARE</span>
+        <span id="prepValue" class="prep-value">00</span>
+      </div>
+
+      <div id="phaseFullRest" class="rest-box fullrest-box" hidden>
+        <span class="rest-label">FULL REST</span>
+        <span id="fullRestValue" class="rest-value">00:00</span>
+        <span class="rest-next">Next: <span id="fullRestNext"></span></span>
+      </div>
+    </section>
+
+    <!-- INFO MODAL -->
+    <div id="infoOverlay" class="info-overlay" hidden>
+      <div class="info-card">
+        <button id="infoClose" class="info-close" type="button" aria-label="Close">&times;</button>
+        <h2 id="infoTitle" class="info-title"></h2>
+        <div id="infoDesc" class="info-desc"></div>
+      </div>
+    </div>
+
+    <!-- DONE OVERLAY -->
+    <div id="doneOverlay" class="done-overlay" hidden>
+      <div class="done-card">
+        <div class="done-check" aria-hidden="true">&#10003;</div>
+        <h2>Workout complete!</h2>
+        <p id="doneSummary"></p>
+        <a class="done-btn" href="index.html">Back to home</a>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="data/exercises.js" charset="utf-8"></script>
+  <script src="js/workout.js"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("sw.js").catch(function () {});
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Knee Push-ups">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e3a5f"/><stop offset="1" stop-color="#0f2238"/></linearGradient></defs>
+  <rect width="240" height="240" rx="18" fill="url(#bg)"/>
+  <g fill="none" stroke="#ff9fb2" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <animateTransform attributeName="transform" type="translate" values="0 0; 0 14; 0 0" dur="1.3s" repeatCount="indefinite"/>
+    <circle cx="62" cy="120" r="15" fill="#ff9fb2" stroke="none"/>
+    <line x1="76" y1="124" x2="170" y2="150"/>
+    <line x1="100" y1="132" x2="96" y2="178"/>
+    <line x1="150" y1="146" x2="150" y2="182"/>
+    <line x1="170" y1="150" x2="196" y2="178"/>
+  </g>
+  <text x="120" y="226" text-anchor="middle" fill="#9fc6e8" font-family="system-ui,sans-serif" font-size="14">Knee Push-ups</text>
+</svg>
