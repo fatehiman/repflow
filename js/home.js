@@ -54,7 +54,7 @@
       const r = data.routines[key];
       const card = document.createElement("a");
       card.className = "routine-card";
-      card.href = "workout.html?routine=" + encodeURIComponent(key);
+      card.href = "?routine=" + encodeURIComponent(key);
 
       const icon = document.createElement("span");
       icon.className = "routine-icon";

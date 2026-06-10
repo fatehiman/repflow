@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0f2238" />
-  <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="icons/icon.svg" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Workout</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -100,7 +97,7 @@
         <div class="done-check" aria-hidden="true">&#10003;</div>
         <h2>Workout complete!</h2>
         <p id="doneSummary"></p>
-        <a class="done-btn" href="index.html">Back to home</a>
+        <a class="done-btn" href="/">Back to home</a>
       </div>
     </div>
 
@@ -109,20 +106,18 @@
   <script src="data/exercises.js" charset="utf-8"></script>
   <script src="js/workout.js"></script>
   <script>
-    // See index.html for notes. Auto-updates to the newest version and reloads
-    // once when the new service worker takes control (no manual cache clear).
+    // Online-only site for now (PWA/offline retired) — see index.html. Remove
+    // any previously-installed service worker and its caches so pages always
+    // load fresh from the network.
     if ("serviceWorker" in navigator) {
-      let refreshing = false;
-      navigator.serviceWorker.addEventListener("controllerchange", function () {
-        if (refreshing) return;
-        refreshing = true;
-        window.location.reload();
-      });
-      window.addEventListener("load", function () {
-        navigator.serviceWorker.register("sw.js", { updateViaCache: "none" })
-          .then(function (reg) { reg.update(); })
-          .catch(function () {});
-      });
+      navigator.serviceWorker.getRegistrations()
+        .then(function (regs) { regs.forEach(function (r) { r.unregister(); }); })
+        .catch(function () {});
+    }
+    if (window.caches && caches.keys) {
+      caches.keys().then(function (keys) {
+        keys.forEach(function (k) { caches.delete(k); });
+      }).catch(function () {});
     }
   </script>
 </body>

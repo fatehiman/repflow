@@ -2,6 +2,17 @@
 # `git pull` into the web root, so .git lives here — don't let it be served).
 RedirectMatch 404 /\.git
 
+# --- Clean URLs (no .html) -------------------------------------------------
+# The workout runner lives at the site root, selected by a ?routine= query:
+#   https://exercise.peppasoft.com/               -> home (routine list)
+#   https://exercise.peppasoft.com/?routine=core1 -> workout runner
+# The rewrite is internal, so the address bar keeps the clean URL.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{QUERY_STRING} (^|&)routine=
+  RewriteRule ^$ workout.html [L]
+</IfModule>
+
 # --- Cache policy ----------------------------------------------------------
 # The app is a PWA behind Cloudflare. The service worker, HTML, manifest, and
 # the JS/CSS that make up the app shell must NEVER be cached by the browser or

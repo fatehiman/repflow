@@ -403,7 +403,7 @@
 
   /* ---------- wiring ---------- */
   el.pauseBtn.addEventListener("click", togglePause);
-  el.quitBtn.addEventListener("click", () => { location.href = "index.html"; });
+  el.quitBtn.addEventListener("click", () => { location.href = "/"; });
   // tap right half of the image → next set, left half → previous set
   el.stage.addEventListener("click", (e) => {
     // let the pause button and the info name button handle their own taps
@@ -420,7 +420,7 @@
     if (e.code === "Space") { e.preventDefault(); togglePause(); }
     if (e.key === "Escape") {
       if (!el.infoOverlay.hidden) closeInfo();
-      else location.href = "index.html";
+      else location.href = "/";
     }
   });
 
