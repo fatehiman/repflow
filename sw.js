@@ -6,7 +6,7 @@
    To ship an update: bump CACHE_VERSION. The old cache is then
    deleted on activate and the new files are fetched once.
    ============================================================ */
-const CACHE_VERSION = "light-workout-v1";
+const CACHE_VERSION = "light-workout-v3";
 
 // All app assets, paths relative to this file (the site root/scope).
 const ASSETS = [

@@ -66,14 +66,63 @@
     u.lang = "en-US"; u.rate = 1; u.pitch = 1;
     window.speechSynthesis.speak(u);
   }
-  // Mobile browsers require a user gesture before TTS will play — unlock on first tap.
-  let voicePrimed = false;
-  function primeVoice() {
-    if (voicePrimed || !canSpeak) return;
-    voicePrimed = true;
-    window.speechSynthesis.speak(new SpeechSynthesisUtterance(" "));
+  /* ---------- beep (Web Audio API) ---------- */
+  // tiny countdown beep on the last 3 seconds of a timed phase
+  let audioCtx = null;
+  function ensureAudio() {
+    if (!audioCtx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) audioCtx = new AC();
+    }
+    if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
   }
-  document.addEventListener("pointerdown", primeVoice, { once: true });
+  function beep() {
+    if (!audioCtx) return;
+    const FREQ = 400, DUR = 0.3, VOL = 0.3;        // 400Hz, 300ms
+    const t = audioCtx.currentTime;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "sine";
+    osc.frequency.value = FREQ;
+    // quick fade in/out to avoid clicks
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.exponentialRampToValueAtTime(VOL, t + 0.01);
+    gain.gain.setValueAtTime(VOL, t + DUR - 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + DUR);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(t); osc.stop(t + DUR);
+  }
+
+  /* ---------- screen wake lock (keep the display on while playing) ---------- */
+  let wakeLock = null;
+  async function requestWakeLock() {
+    if (!("wakeLock" in navigator)) return;
+    try {
+      wakeLock = await navigator.wakeLock.request("screen");
+      wakeLock.addEventListener("release", () => { wakeLock = null; });
+    } catch (e) { /* rejected (e.g. tab hidden) — ignore */ }
+  }
+  function releaseWakeLock() {
+    if (wakeLock) { wakeLock.release().catch(() => {}); wakeLock = null; }
+  }
+  // the OS drops the lock when the page is hidden; re-acquire when it comes back
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible" && !state.paused && !state.finished) {
+      requestWakeLock();
+    }
+  });
+
+  // Mobile browsers require a user gesture before TTS / audio / wake lock will
+  // engage — unlock everything on the first tap.
+  let primed = false;
+  function primeOnGesture() {
+    if (primed) return;
+    primed = true;
+    if (canSpeak) window.speechSynthesis.speak(new SpeechSynthesisUtterance(" "));
+    ensureAudio();
+    if (!state.paused && !state.finished) requestWakeLock();
+  }
+  document.addEventListener("pointerdown", primeOnGesture, { once: true });
 
   function announce(step) {
     const ex = state.exercises[step.exIndex];
@@ -149,6 +198,7 @@
     lastTs: 0,
     currentExIndex: -1,
     spokenIndex: -1,
+    beepStep: -1, beepSec: -1,   // last (step, second) we beeped, to fire once each
   };
 
   function start(routine) {
@@ -156,26 +206,30 @@
     const tl = buildTimeline(routine.exercises);
     state.steps = tl.steps;
     state.total = tl.total;
-    // step index where each set begins (first rep of the set), across all exercises
-    state.setStarts = [];
+    // navigation anchors: the start of every phase — prepare, each set (first
+    // rep), each rest, each full rest. Lets left/right tap step through rests
+    // and prepare phases too, not only set starts.
+    state.navStarts = [];
     state.steps.forEach((s, idx) => {
-      if (s.type === "rep" && s.rep === 1) state.setStarts.push(idx);
+      if (s.type !== "rep" || s.rep === 1) state.navStarts.push(idx);
     });
     el.totTotal.textContent = mmss(state.total);
     el.exIdxTot.textContent = routine.exercises.length;
     document.title = routine.title;
+    requestWakeLock();                  // keep the screen on while the workout runs
     requestAnimationFrame(loop);
   }
 
-  // jump to the previous / next set (delta = -1 / +1)
+  // jump to the previous / next phase (delta = -1 / +1) — prepare, set, rest,
+  // and full rest are all valid stopping points
   function jumpSet(delta) {
-    if (state.finished || !state.setStarts.length) return;
+    if (state.finished || !state.navStarts.length) return;
     let p = 0;
-    for (let k = 0; k < state.setStarts.length; k++) {
-      if (state.setStarts[k] <= state.i) p = k; else break;
+    for (let k = 0; k < state.navStarts.length; k++) {
+      if (state.navStarts[k] <= state.i) p = k; else break;
     }
-    const target = Math.max(0, Math.min(state.setStarts.length - 1, p + delta));
-    state.i = state.setStarts[target];
+    const target = Math.max(0, Math.min(state.navStarts.length - 1, p + delta));
+    state.i = state.navStarts[target];
     state.stepElapsed = 0;
     state.spokenIndex = -1;           // force re-announce of the new set
     if (canSpeak) window.speechSynthesis.cancel();
@@ -265,6 +319,18 @@
     el.phaseFullRest.hidden = step.type !== "fullrest";
 
     const remaining = step.dur - state.stepElapsed;
+
+    // countdown beep: a 400Hz/300ms tone on each of the final 3 seconds (3,2,1)
+    // of any timed countdown phase (prepare / rest / full rest)
+    const isCountdown = step.type === "rest" || step.type === "prepare" || step.type === "fullrest";
+    if (isCountdown && !state.paused) {
+      const sec = Math.ceil(remaining);
+      if (sec >= 1 && sec <= 3 && (state.beepStep !== state.i || state.beepSec !== sec)) {
+        state.beepStep = state.i; state.beepSec = sec;
+        beep();
+      }
+    }
+
     if (step.type === "rep") {
       el.repNow.textContent = step.rep;
       el.repTot.textContent = step.reps;
@@ -284,6 +350,7 @@
 
   function finish() {
     state.finished = true;
+    releaseWakeLock();
     el.totElapsed.textContent = mmss(state.total);
     el.exElapsed.textContent = el.exTotal.textContent;
     setRing(el.ringSet, C.set, 1);
@@ -316,7 +383,12 @@
     state.paused = !state.paused;
     document.body.classList.toggle("is-paused", state.paused);
     el.pauseBtn.setAttribute("aria-label", state.paused ? "Play" : "Pause");
-    if (state.paused && canSpeak) window.speechSynthesis.cancel();
+    if (state.paused) {
+      if (canSpeak) window.speechSynthesis.cancel();
+      releaseWakeLock();               // let the screen sleep while paused
+    } else {
+      requestWakeLock();
+    }
   }
 
   /* ---------- wiring ---------- */

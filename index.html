@@ -30,9 +30,22 @@
     // Register the service worker so the app works fully offline after the
     // first visit. No-ops on file:// (SW needs http/https) — that's fine,
     // the page still runs from the local data file.
+    //
+    // Auto-update: updateViaCache:"none" + reg.update() force the browser to
+    // re-check sw.js on every load (never from HTTP cache), so a bumped
+    // CACHE_VERSION is picked up immediately. When the new worker takes
+    // control we reload once — no manual cache clearing needed on mobile.
     if ("serviceWorker" in navigator) {
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener("controllerchange", function () {
+        if (refreshing) return;
+        refreshing = true;
+        window.location.reload();
+      });
       window.addEventListener("load", function () {
-        navigator.serviceWorker.register("sw.js").catch(function () {});
+        navigator.serviceWorker.register("sw.js", { updateViaCache: "none" })
+          .then(function (reg) { reg.update(); })
+          .catch(function () {});
       });
     }
   </script>

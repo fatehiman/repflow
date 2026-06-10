@@ -23,13 +23,13 @@ window.WORKOUT_DATA = {
         },
         {
           name: "Dead Bug", image: "images/dead-bug.gif",
-          repTime: 4, reps: 8, sets: 3, restAfterSet: 45, prepareTime: 10, restAfterExercise: 60,
+          repTime: 4, reps: 10, sets: 3, restAfterSet: 45, prepareTime: 10, restAfterExercise: 60,
           descDir: "rtl",
           description: "به پشت دراز بکشید، زانوها را 90 درجه خم کرده و دست‌ها را به سمت سقف نگه دارید. همزمان یک دست و پای مخالف را به آرامی دور کنید و سپس به حالت اولیه برگردانید. در تمام مدت کمر باید روی زمین باقی بماند."
         },
         {
           name: "Glute Bridge", image: "images/glutebridge.webp",
-          repTime: 4, reps: 12, sets: 3, restAfterSet: 60, prepareTime: 10, restAfterExercise: 90,
+          repTime: 4, reps: 12, sets: 3, restAfterSet: 45, prepareTime: 10, restAfterExercise: 60,
           descDir: "rtl",
           description: "به پشت دراز بکشید، زانوها خم و کف پاها روی زمین باشد. عضلات باسن را منقبض کرده و لگن را بالا بیاورید تا بدن از شانه تا زانو در یک خط قرار گیرد. سپس به آرامی پایین بیایید."
         },
@@ -41,7 +41,7 @@ window.WORKOUT_DATA = {
         },
         {
           name: "Wall Sit", image: "images/wall-sit.gif",
-          repTime: 1, reps: 30, sets: 3, restAfterSet: 60, prepareTime: 10, restAfterExercise: 90,
+          repTime: 1, reps: 30, sets: 3, restAfterSet: 45, prepareTime: 10, restAfterExercise: 60,
           descDir: "rtl",
           description: "پشت خود را به دیوار تکیه دهید و به آرامی پایین بروید تا زانوها حدود نیمه خم شوند. این وضعیت را ثابت نگه دارید و سپس به حالت ایستاده برگردید."
         },

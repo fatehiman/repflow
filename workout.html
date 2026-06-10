@@ -109,9 +109,19 @@
   <script src="data/exercises.js" charset="utf-8"></script>
   <script src="js/workout.js"></script>
   <script>
+    // See index.html for notes. Auto-updates to the newest version and reloads
+    // once when the new service worker takes control (no manual cache clear).
     if ("serviceWorker" in navigator) {
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener("controllerchange", function () {
+        if (refreshing) return;
+        refreshing = true;
+        window.location.reload();
+      });
       window.addEventListener("load", function () {
-        navigator.serviceWorker.register("sw.js").catch(function () {});
+        navigator.serviceWorker.register("sw.js", { updateViaCache: "none" })
+          .then(function (reg) { reg.update(); })
+          .catch(function () {});
       });
     }
   </script>
