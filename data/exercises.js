@@ -29,7 +29,7 @@ window.WORKOUT_DATA = {
         },
         {
           name: "Glute Bridge", image: "images/glutebridge.webp",
-          repTime: 4, reps: 12, sets: 3, restAfterSet: 45, prepareTime: 10, restAfterExercise: 60,
+          repTime: 7, reps: 12, sets: 3, restAfterSet: 45, prepareTime: 10, restAfterExercise: 60,
           descDir: "rtl",
           description: "به پشت دراز بکشید، زانوها خم و کف پاها روی زمین باشد. عضلات باسن را منقبض کرده و لگن را بالا بیاورید تا بدن از شانه تا زانو در یک خط قرار گیرد. سپس به آرامی پایین بیایید."
         },
