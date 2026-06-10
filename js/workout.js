@@ -78,6 +78,7 @@
   }
   function beep() {
     if (!audioCtx) return;
+    if (audioCtx.state === "suspended") audioCtx.resume();   // best-effort re-unlock
     const FREQ = 400, DUR = 0.3, VOL = 0.3;        // 400Hz, 300ms
     const t = audioCtx.currentTime;
     const osc = audioCtx.createOscillator();
@@ -112,17 +113,26 @@
     }
   });
 
-  // Mobile browsers require a user gesture before TTS / audio / wake lock will
-  // engage — unlock everything on the first tap.
+  // Browsers block audio (and gate TTS / wake lock) until the user interacts
+  // with THIS page — and a fresh load after navigating from the home screen
+  // starts with no activation, so the first PREPARE countdown can be silent
+  // until you tap. Unlock on the first gesture of ANY kind, and keep listening
+  // until the AudioContext is actually running (one tap → sound for the rest
+  // of the session).
+  const UNLOCK_EVENTS = ["pointerdown", "touchstart", "mousedown", "keydown", "click"];
   let primed = false;
-  function primeOnGesture() {
-    if (primed) return;
-    primed = true;
-    if (canSpeak) window.speechSynthesis.speak(new SpeechSynthesisUtterance(" "));
+  function unlockOnGesture() {
+    if (!primed) {
+      primed = true;
+      if (canSpeak) window.speechSynthesis.speak(new SpeechSynthesisUtterance(" "));
+      if (!state.paused && !state.finished) requestWakeLock();
+    }
     ensureAudio();
-    if (!state.paused && !state.finished) requestWakeLock();
+    if (audioCtx && audioCtx.state === "running") {
+      UNLOCK_EVENTS.forEach((ev) => document.removeEventListener(ev, unlockOnGesture));
+    }
   }
-  document.addEventListener("pointerdown", primeOnGesture, { once: true });
+  UNLOCK_EVENTS.forEach((ev) => document.addEventListener(ev, unlockOnGesture));
 
   function announce(step) {
     const ex = state.exercises[step.exIndex];
